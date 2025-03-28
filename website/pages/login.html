@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>My Music List</title>
+  <style>
+   @font-face {
+    font-family: "myFont";
+    src: url("/website/fonts/Tektur-VariableFont_wdth\,wght.ttf");
+   }
+    #container1 {
+      display: flex;
+      font-family: "myFont";
+      flex-direction: column; /* מסדר את האלמנטים בטור */
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      gap: 5px; /* מקטין את הרווח בין האלמנטים */
+      font-size: 20px;
+      text-align: center;
+    }
+
+    input {
+      font-family: "myFont";
+      padding: 8px; /* הרווח בין הinput לשם האלמנט*/
+      font-size: 16px;
+      border-radius: 5px;
+      width: 200px;
+    }
+
+    .Loginbutton{
+      font-family: "myFont";
+      margin-top: 10px;
+      padding: 10px;
+      font-size: 18px;
+      background-color: rgb(69, 13, 95);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    
+  </style>
+</head>
+
+<body>
+  <h1>My Music List</h1>
+
+  <div id="container1">
+    <h1>Username</h1>
+    <input type="text" placeholder="Enter username" id="username2">
+    
+    <h1>Password</h1>
+    <input type="password" placeholder="Enter password" id="password2">  <!-- קובע טקסט זמני שמופיע בתוך שדה הקלט (input) עד שהמשתמש מתחיל להקליד. -->
+    
+    <button class="loginbutton">Log in</button>
+    <a href="login.js"></a>
+    <div id="message2"></div>
+ 
+  </div>
+</body>
+
+</html>

@@ -11,7 +11,7 @@ class Program
     var server = new Server(port);
 
     Console.WriteLine("The server is running");
-    Console.WriteLine($"Main Page: http://localhost:{port}/website/pages/index.html");
+    Console.WriteLine($"Main page://localhost:{port}/website/pages/signup.html");
 
     var database = new Database();
 
@@ -36,9 +36,41 @@ class Program
       {
         try
         {
-          /*──────────────────────────────────╮
-          │ Handle your custome requests here │
-          ╰──────────────────────────────────*/
+            if (request.Path == "verifyUserId")
+          {
+            var userId = request.GetBody<string>();
+
+            var varified = database.Users.Any(user => user.Id == userId);
+
+            response.Send(varified);
+          }
+           else if (request.Path == "signUp")
+          {
+            var (username, password) = request.GetBody<(string, string)>();
+
+            var userExists = database.Users.Any(user =>
+              user.Username == username
+            );
+
+            if (!userExists)
+            {
+              var userId = Guid.NewGuid().ToString();
+              database.Users.Add(new User(userId, username, password));
+              response.Send(userId);
+            }
+          }
+          else if (request.Path == "logIn")
+          {
+            var (username, password) = request.GetBody<(string, string)>();
+
+            var user = database.Users.First(
+              user => user.Username == username && user.Password == password
+            );
+
+            var userId = user.Id;
+
+            response.Send(userId);
+          }
           response.SetStatusCode(405);
 
           database.SaveChanges();
@@ -57,9 +89,8 @@ class Program
 
 class Database() : DbBase("database")
 {
-  /*──────────────────────────────╮
-  │ Add your database tables here │
-  ╰──────────────────────────────*/
+  public DbSet<User> Users { get; set; } = default!;
+
 }
 
 class User(string id, string username, string password)
