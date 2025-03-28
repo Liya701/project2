@@ -44,7 +44,7 @@ class Program
 
             response.Send(varified);
           }
-           else if (request.Path == "signUp")
+      else if (request.Path == "signup")
           {
             var (username, password) = request.GetBody<(string, string)>();
 
@@ -59,7 +59,7 @@ class Program
               response.Send(userId);
             }
           }
-          else if (request.Path == "logIn")
+          else if (request.Path == "login")
           {
             var (username, password) = request.GetBody<(string, string)>();
 

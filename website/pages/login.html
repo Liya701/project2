@@ -8,12 +8,17 @@
     font-family: "myFont";
     src: url("/website/fonts/Tektur-VariableFont_wdth\,wght.ttf");
    }
+   body {
+  background-image: url('https://t4.ftcdn.net/jpg/06/19/53/01/360_F_619530124_cEEI1FbaoR4EscJD94SERCJdufzEFaFX.jpg'); 
+  background-size: cover; /* גורם לתמונה לכסות את כל המסך */
+ }
     #container1 {
       display: flex;
       font-family: "myFont";
       flex-direction: column; /* מסדר את האלמנטים בטור */
       justify-content: center;
       align-items: center;
+      color: white;
       height: 100vh;
       gap: 5px; /* מקטין את הרווח בין האלמנטים */
       font-size: 20px;
@@ -28,7 +33,7 @@
       width: 200px;
     }
 
-    .Loginbutton{
+    .loginbutton{
       font-family: "myFont";
       margin-top: 10px;
       padding: 10px;
@@ -45,9 +50,10 @@
 </head>
 
 <body>
-  <h1>My Music List</h1>
+
 
   <div id="container1">
+    <h1>My Music List</h1>
     <h1>Username</h1>
     <input type="text" placeholder="Enter username" id="username2">
     
