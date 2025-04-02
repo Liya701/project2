@@ -11,7 +11,7 @@ class Program
     var server = new Server(port);
 
     Console.WriteLine("The server is running");
-    Console.WriteLine($"Main page://localhost:{port}/website/pages/signup.html");
+    Console.WriteLine($"Main page: http://localhost:{port}/website/pages/signup.html");
 
     var database = new Database();
 
@@ -36,15 +36,8 @@ class Program
       {
         try
         {
-            if (request.Path == "verifyUserId")
-          {
-            var userId = request.GetBody<string>();
-
-            var varified = database.Users.Any(user => user.Id == userId);
-
-            response.Send(varified);
-          }
-      else if (request.Path == "signup")
+       
+       if (request.Path == "signup")
           {
             var (username, password) = request.GetBody<(string, string)>();
 

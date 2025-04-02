@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<title>Music Player</title>
+<style>
+  body {
+      background-color: black;
+      margin: 0;
+      padding: 0;
+  }
+  .player {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #222;
+      color: white;
+      padding: 10px;
+      border-radius: 15px;
+      text-align: center;
+      width: 180px;
+      box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+  }
+  .player img {
+      width: 100%;
+      border-radius: 10px;
+  }
+  .controls {
+      margin-top: 5px;
+  }
+  button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<div class="player">
+  <img id="song-image" src="https://did.li/z1amC" alt="Song Cover">
+  <h4 id="song-name">i love it</h4>
+  <p id="singer-name">Icona pop, Charli xcx</p>
+  <audio id="audio" src="https://www.youtube.com/watch?v=UxxajLWwzqY"></audio>
+  <div class="controls">
+      <button onclick="playPause()">▶️</button>
+  </div>
+</div>
+
+<script src="index.js" type="module"></script>
+
+</body>
+</html>
