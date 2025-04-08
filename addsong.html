@@ -108,10 +108,16 @@
 
 <body>
   <div id="container">
-    <h1>Featured Songs</h1> <!-- הוספתי את ה-h1 -->
+    <h1>Add Your Song</h1>
+    <input type="text" id="songName" placeholder="Song name" />
+    <input type="text" id="singerName" placeholder="Singer name" />
+    <input type="text" id="imageUrl" placeholder="Image URL" />
+    <input type="text" id="audioUrl" placeholder="Audio URL (MP3 link)" />
+    <button class="addSongButton">Add Song</button>
+    <div id="message"></div>
   </div>
 
-  <div id="musicPlayer"></div> <!-- מקום בו יופיעו השירים -->
+  <div id="musicPlayer"></div>
 
   <script src="addsong.js" type="module"></script>
 </body>

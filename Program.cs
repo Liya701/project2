@@ -34,10 +34,11 @@ class Program
       }
       else
       {
+
         try
         {
-       
-       if (request.Path == "signup")
+
+          if (request.Path == "signup")
           {
             var (username, password) = request.GetBody<(string, string)>();
 
@@ -64,6 +65,22 @@ class Program
 
             response.Send(userId);
           }
+          else if (request.Path == "addSong")
+          {
+            var (name, singer, imageUrl, audioUrl, userId) = request.GetBody<(string, string, string, string, string)>();
+
+            database.Songs.Add(new Song(0, name, singer, imageUrl, audioUrl, userId));
+            response.Send("Song added successfully");
+          }
+          else if (request.Path == "getSongs")
+          {
+            var userId = request.GetBody<string>();
+            var songs = database.Songs
+                .Where(song => song.UserId == userId)
+                .ToList();
+
+            response.Send(songs);
+          }
           response.SetStatusCode(405);
 
           database.SaveChanges();
@@ -83,8 +100,10 @@ class Program
 class Database() : DbBase("database")
 {
   public DbSet<User> Users { get; set; } = default!;
+  public DbSet<Song> Songs { get; set; } = default!;
 
 }
+
 
 class User(string id, string username, string password)
 {
@@ -92,3 +111,16 @@ class User(string id, string username, string password)
   public string Username { get; set; } = username;
   public string Password { get; set; } = password;
 }
+
+
+
+class Song(int id, string name, string singer, string imageUrl, string audioUrl, string userId)
+{
+  [Key] public int Id { get; set; } = id;
+  public string Name { get; set; } = name;
+  public string Singer { get; set; } = singer;
+  public string ImageUrl { get; set; } = imageUrl;
+  public string AudioUrl { get; set; } = audioUrl;
+  public string UserId { get; set; } = userId;
+}
+
