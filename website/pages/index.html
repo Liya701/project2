@@ -3,117 +3,77 @@
 
 <head>
   <title>My Music Player</title>
-  <style>
-    @font-face {
-      font-family: "myFont";
-      src: url("/website/fonts/Tektur-VariableFont_wdth,wght.ttf");
-    }
-
-    body {
-      margin: 0;
-      background-image: url('https://t4.ftcdn.net/jpg/06/19/53/01/360_F_619530124_cEEI1FbaoR4EscJD94SERCJdufzEFaFX.jpg');
-      background-size: cover;
-      background-position: center;
-      font-family: "myFont";
-      color: white;
-    }
-
-    #container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      padding-top: 50px;
-    }
-
-    h1 {
-      font-size: 36px;
-      margin-bottom: 10px;
-    }
-
-    input {
-      padding: 10px;
-      font-size: 16px;
-      width: 250px;
-      border-radius: 8px;
-      border: none;
-    }
-
-    .addSongButton {
-      padding: 10px 20px;
-      font-size: 18px;
-      background-color: rgb(69, 13, 95);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .addSongButton:hover {
-      background-color: rgb(100, 30, 130);
-    }
-
-    #message {
-      margin-top: 10px;
-      font-size: 18px;
-      color: #ffccff;
-    }
-
-    #musicPlayer {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      padding: 40px;
-    }
-
-    .song-card {
-      background-color: rgba(0, 0, 0, 0.6);
-      border-radius: 12px;
-      padding: 20px;
-      width: 250px;
-      text-align: center;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-    }
-
-    .song-card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 10px;
-      margin-bottom: 10px;
-    }
-
-    .song-card h3 {
-      margin: 5px 0;
-    }
-
-    .song-card button {
-      margin-top: 10px;
-      padding: 8px 15px;
-      font-size: 18px;
-      background-color: rgb(69, 13, 95);
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .song-card button:hover {
-      background-color: rgb(100, 30, 130);
-    }
-  </style>
-</head>
+<style>
+  @font-face {
+    font-family: "myFont";
+    src: url("/website/fonts/Tektur-VariableFont_wdth,wght.ttf");
+  }
+  
+  body {
+    margin: 0;
+    background-image: url('https://t4.ftcdn.net/jpg/06/19/53/01/360_F_619530124_cEEI1FbaoR4EscJD94SERCJdufzEFaFX.jpg');
+    background-size: cover;
+    background-position: center;
+    font-family: "myFont";
+    color: white;
+    text-align: center;
+  }
+  
+  #welcomeTitle {
+    padding: 30px;
+    font-size: 36px;
+  }
+  
+  #songsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    padding: 40px;
+  }
+  
+  .song-card {
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 12px;
+    padding: 20px;
+    width: 250px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  }
+  
+  .song-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .song-card h3 {
+    margin: 5px 0;
+  }
+  
+  .song-card button {
+    margin-top: 10px;
+    padding: 8px 15px;
+    font-size: 18px;
+    background-color: rgb(69, 13, 95);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .song-card button:hover {
+    background-color: rgb(100, 30, 130);
+  }
+</style></head>
 
 <body>
-  <div id="container">
-    <h1>Featured Songs</h1> <!-- הוספתי את ה-h1 -->
-  </div>
+  <h1 id="welcomeTitle">Welcome to Your Music Library 🎵</h1>
 
-  <div id="musicPlayer"></div> <!-- מקום בו יופיעו השירים -->
+  <div id="songsContainer" class="container"></div>
 
-  <script src="addsong.js" type="module"></script>
+  <script type="module" src="index.js"></script>
 </body>
 
 </html>

@@ -1,5 +1,4 @@
 import { send } from "../utilities";
-let musicPlayer = document.querySelector("#musicPlayer") as HTMLDivElement;
 
 type Song = {
   name: string;
@@ -8,49 +7,44 @@ type Song = {
   audioUrl: string;
 };
 
-// נטען את userId מתוך localStorage (שנשמר לאחר login/signup)
 let userId = localStorage.getItem("userId");
+let songsContainer = document.querySelector("#songsContainer") as HTMLDivElement;
 
-// טוען את השירים מהשרת עבור המשתמש הנוכחי
 async function loadSongs() {
-  if (!userId) return;
-
-  musicPlayer.innerHTML = ""; // מאפס את תצוגת השירים
+  if (!userId || !songsContainer) return;
 
   let songs = await send("getSongs", userId) as Song[];
-  if (!songs || songs.length === 0) {
-    // אם אין שירים, נוסיף שירים דוגמתיים
-    songs = [
-      { name: "i love it", singer: "Icona Pop, Charli xcx", imageUrl: "https://did.li/yF6CN", audioUrl: "https://did.li/ndsx5" },
-      { name: "Song Title 2", singer: "Artist 2", imageUrl: "image2.jpg", audioUrl: "audio2.mp3" },
-      { name: "Song Title 3", singer: "Artist 3", imageUrl: "image3.jpg", audioUrl: "audio3.mp3" }
-    ];
-  }
+  if (!songs) songs = [];
 
-  songs.forEach((song) => {
+  songsContainer.innerHTML = "";
+
+  songs.forEach(song => {
     let card = document.createElement("div");
     card.className = "song-card";
 
     let img = document.createElement("img");
     img.src = song.imageUrl;
 
-    let info = document.createElement("div");
-    info.innerHTML = `<h3>${song.name}</h3><p>${song.singer}</p>`;
+    let title = document.createElement("h3");
+    title.textContent = song.name;
 
-    let button = document.createElement("button");
-    button.textContent = "▶️";
+    let artist = document.createElement("p");
+    artist.textContent = song.singer;
+
+    let playButton = document.createElement("button");
+    playButton.textContent = "▶️";
     let audio = new Audio(song.audioUrl);
 
-    button.onclick = () => {
+    playButton.onclick = () => {
       audio.play();
     };
 
     card.appendChild(img);
-    card.appendChild(info);
-    card.appendChild(button);
-    musicPlayer.appendChild(card);
+    card.appendChild(title);
+    card.appendChild(artist);
+    card.appendChild(playButton);
+    songsContainer.appendChild(card);
   });
 }
 
-// טוען את השירים כשנטענת הדף
 loadSongs();

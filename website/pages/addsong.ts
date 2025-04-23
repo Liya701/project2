@@ -1,4 +1,5 @@
 import { send } from "../utilities";
+
 let songName = document.querySelector("#songName") as HTMLInputElement;
 let singerName = document.querySelector("#singerName") as HTMLInputElement;
 let imageUrl = document.querySelector("#imageUrl") as HTMLInputElement;
@@ -8,11 +9,11 @@ let message = document.querySelector("#message") as HTMLDivElement;
 let musicPlayer = document.querySelector("#musicPlayer") as HTMLDivElement;
 
 type Song = {
-    name: string;
-    singer: string;
-    imageUrl: string;
-    audioUrl: string;
-  };
+  name: string;
+  singer: string;
+  imageUrl: string;
+  audioUrl: string;
+};
 
 // נטען את userId מתוך localStorage (שנשמר לאחר login/signup)
 let userId = localStorage.getItem("userId");
@@ -47,7 +48,6 @@ function clearInputs() {
   audioUrl.value = "";
 }
 
-
 // טוען את השירים מהשרת עבור המשתמש הנוכחי
 async function loadSongs() {
   if (!userId) return;
@@ -55,9 +55,9 @@ async function loadSongs() {
   musicPlayer.innerHTML = "";
 
   let songs = await send("getSongs", userId) as Song[];
-if (!songs) {
-  songs = [];
-}
+  if (!songs) {
+    songs = [];
+  }
 
   songs.forEach((song) => {
     let card = document.createElement("div");
@@ -85,31 +85,32 @@ if (!songs) {
 }
 
 // טוען את השירים כשנטענת הדף
-loadSongs()
+loadSongs();
+
 addSongButton.onclick = async function () {
-    if (!userId) {
-      message.innerText = "User not logged in.";
-      return;
-    }
-  
-    let response = await send("addSong", [
-      songName.value,
-      singerName.value,
-      imageUrl.value,
-      audioUrl.value,
-      userId
-    ]) as string;
-  
-    if (response === "Song added successfully") {
-      message.innerText = "🎉 The song was successfully added!";
-      clearInputs();
-      loadSongs(); // Reload the songs from the server
-  
-      // Redirect to index.html after song is added
-      setTimeout(() => {
-        window.location.href = 'index.html'; // Redirect after 2 seconds
-      }, 2000);
-    } else {
-      message.innerText = "😞 We couldn't add your song";
-    }
-  };
+  if (!userId) {
+    message.innerText = "User not logged in.";
+    return;
+  }
+
+  let response = await send("addSong", [
+    songName.value,
+    singerName.value,
+    imageUrl.value,
+    audioUrl.value,
+    userId
+  ]) as string;
+
+  if (response === "Song added successfully") {
+    message.innerText = "🎉 The song was successfully added!";
+    clearInputs();
+    loadSongs(); // Reload the songs from the server
+
+    // Redirect to index.html after song is added
+    setTimeout(() => {
+      window.location.href = 'index.html'; // Redirect after 2 seconds
+    }, 2000);
+  } else {
+    message.innerText = "😞 We couldn't add your song";
+  }
+};

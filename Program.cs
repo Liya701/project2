@@ -14,6 +14,7 @@ class Program
     Console.WriteLine($"Main page: http://localhost:{port}/website/pages/signup.html");
 
     var database = new Database();
+    
 
     while (true)
     {
@@ -101,7 +102,6 @@ class Database() : DbBase("database")
 {
   public DbSet<User> Users { get; set; } = default!;
   public DbSet<Song> Songs { get; set; } = default!;
-
 }
 
 
@@ -111,6 +111,8 @@ class User(string id, string username, string password)
   public string Username { get; set; } = username;
   public string Password { get; set; } = password;
 }
+
+
 
 
 
