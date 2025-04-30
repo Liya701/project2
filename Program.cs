@@ -14,7 +14,7 @@ class Program
     Console.WriteLine($"Main page: http://localhost:{port}/website/pages/signup.html");
 
     var database = new Database();
-    
+
 
     while (true)
     {
@@ -82,6 +82,53 @@ class Program
 
             response.Send(songs);
           }
+          else if (request.Path == "getPreviews")
+          {
+            var userId = request.GetBody<string>();
+
+            var previews = database.Songs
+              .Where(song => song.UserId == userId)
+              .Select(song => new
+              {
+                id = song.Id,
+                title = song.Name,
+                imageSource = song.ImageUrl
+              })
+              .ToList();
+
+            response.Send(previews);
+          }
+          else if (request.Path == "getIsFavorite")
+          {
+             (string userId, int songId) = request.GetBody<(string, int)>();
+
+            bool isFavorite = database.Favorites.Any(
+              f => f.UserId == userId && f.SongId == songId
+            );
+
+            response.Send(isFavorite);
+          }
+          else if (request.Path == "addToFavorites")
+          {
+            (string userId, int songId) = request.GetBody<(string, int)>();
+
+           Favorite userFavorite = new Favorite(userId, songId);
+              database.Favorites.Add(userFavorite);
+
+            response.Send("Added to favorites");
+          }
+          else if (request.Path == "removeFromFavorites")
+          {
+            (string userId, int songId) = request.GetBody<(string, int)>();
+
+            var favorite = database.Favorites.First(
+              f => f.UserId == userId && f.SongId == songId
+            );
+
+            database.Favorites.Remove(favorite);
+
+            response.Send("Removed from favorites");
+          }
           response.SetStatusCode(405);
 
           database.SaveChanges();
@@ -102,6 +149,8 @@ class Database() : DbBase("database")
 {
   public DbSet<User> Users { get; set; } = default!;
   public DbSet<Song> Songs { get; set; } = default!;
+    public DbSet<Favorite> Favorites { get; set; }
+
 }
 
 
@@ -124,5 +173,20 @@ class Song(int id, string name, string singer, string imageUrl, string audioUrl,
   public string ImageUrl { get; set; } = imageUrl;
   public string AudioUrl { get; set; } = audioUrl;
   public string UserId { get; set; } = userId;
+}
+
+class Favorite(string userId, int songId)
+{
+  [Key]
+  public int Id { get; set; }
+
+  public string UserId { get; set; } = userId;
+  public int SongId { get; set; } = songId;
+
+  [ForeignKey("UserId")]
+  public User? User { get; set; }
+
+  [ForeignKey("SongId")]
+  public Song? song { get; set; }
 }
 

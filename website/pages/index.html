@@ -2,76 +2,86 @@
 <html>
 
 <head>
-  <title>My Music Player</title>
+  <title>MyBookList</title>
 <style>
   @font-face {
-    font-family: "myFont";
-    src: url("/website/fonts/Tektur-VariableFont_wdth,wght.ttf");
-  }
-  
-  body {
-    margin: 0;
-    background-image: url('https://t4.ftcdn.net/jpg/06/19/53/01/360_F_619530124_cEEI1FbaoR4EscJD94SERCJdufzEFaFX.jpg');
-    background-size: cover;
-    background-position: center;
-    font-family: "myFont";
-    color: white;
-    text-align: center;
-  }
-  
-  #welcomeTitle {
-    padding: 30px;
-    font-size: 36px;
-  }
-  
-  #songsContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 30px;
-    padding: 40px;
-  }
-  
-  .song-card {
-    background-color: rgba(0, 0, 0, 0.6);
-    border-radius: 12px;
-    padding: 20px;
-    width: 250px;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-  }
-  
-  .song-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .song-card h3 {
-    margin: 5px 0;
-  }
-  
-  .song-card button {
-    margin-top: 10px;
-    padding: 8px 15px;
-    font-size: 18px;
-    background-color: rgb(69, 13, 95);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .song-card button:hover {
-    background-color: rgb(100, 30, 130);
-  }
-</style></head>
+  font-family: "myFont";
+  src: url("/website/fonts/Tektur-VariableFont_wdth\,wght.ttf");
+}
+
+* {
+  font-family: "myFont";
+}
+
+body {
+  margin: 0;
+}
+
+h2 {
+  margin-left: 40px;
+}
+
+.preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 20px;
+}
+
+.addSong {
+  width: 100px;
+  height: 150px;
+  border-radius: 7px;
+
+  background-color: gainsboro;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.songImage {
+  height: 150px;
+  box-shadow: 0px 2px 40px -20px rgba(0, 0, 0, 0.75);
+  border-radius: 7px;
+  display: block;
+}
+
+.plusImage {
+  width: 90%;
+}
+
+.hidden {
+  display: none !important;
+}
+</style>  
+</head>
 
 <body>
-  <h1 id="welcomeTitle">Welcome to Your Music Library 🎵</h1>
 
-  <div id="songsContainer" class="container"></div>
+  <h2 id="favoritesH2">Favorites</h2>
+  <div id="favoritesContainer" class="container"></div>
+
+  <h2 id="moreBooksH2">More Books</h2>
+  <div id="previewsContainer" class="container">
+
+    <a class="preview" href="addsong.html">
+      <div class="addsong">
+        <img class="plusImage" src="images/plus.png">
+      </div>
+      <div>Add a Song</div>
+    </a>
+
+  </div>
+
+  <div id="cardsContainer"></div>
 
   <script type="module" src="index.js"></script>
 </body>

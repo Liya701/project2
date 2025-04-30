@@ -59,33 +59,7 @@ async function loadSongs() {
     songs = [];
   }
 
-  songs.forEach((song) => {
-    let card = document.createElement("div");
-    card.className = "song-card";
 
-    let img = document.createElement("img");
-    img.src = song.imageUrl;
-
-    let info = document.createElement("div");
-    info.innerHTML = `<h3>${song.name}</h3><p>${song.singer}</p>`;
-
-    let button = document.createElement("button");
-    button.textContent = "▶️";
-    let audio = new Audio(song.audioUrl);
-
-    button.onclick = () => {
-      audio.play();
-    };
-
-    card.appendChild(img);
-    card.appendChild(info);
-    card.appendChild(button);
-    musicPlayer.appendChild(card);
-  });
-}
-
-// טוען את השירים כשנטענת הדף
-loadSongs();
 
 addSongButton.onclick = async function () {
   if (!userId) {
@@ -113,4 +87,5 @@ addSongButton.onclick = async function () {
   } else {
     message.innerText = "😞 We couldn't add your song";
   }
+}
 };
