@@ -100,7 +100,7 @@ class Program
           }
           else if (request.Path == "getIsFavorite")
           {
-             (string userId, int songId) = request.GetBody<(string, int)>();
+      (string userId, int songId) = request.GetBody<(string, int)>();
 
             bool isFavorite = database.Favorites.Any(
               f => f.UserId == userId && f.SongId == songId
@@ -121,7 +121,7 @@ class Program
           {
             (string userId, int songId) = request.GetBody<(string, int)>();
 
-            var favorite = database.Favorites.First(
+            Favorite favorite = database.Favorites.First(
               f => f.UserId == userId && f.SongId == songId
             );
 
