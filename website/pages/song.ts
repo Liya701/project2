@@ -11,14 +11,14 @@ let url = new URLSearchParams(location.search);
 let songId = Number(url.get("songId"));
 
 favoriteButton.onclick = async function () {
-  await send("addToFavorites", { userId, songId });
+  await send("addToFavorites", [userId, songId ]);
 
   favoriteButton.disabled = true;
   unfavoriteButton.disabled = false;
 };
 
 unfavoriteButton.onclick = async function () {
-  await send("removeFromFavorites", { userId, songId });
+  await send("removeFromFavorites", [userId, songId ]);
 
   favoriteButton.disabled = false;
   unfavoriteButton.disabled = true;
