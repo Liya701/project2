@@ -9,37 +9,44 @@ let userId = localStorage.getItem("userId");
 
 type Preview = {
   id: number;
-  title: string;
-  imageSource: string;
+  name: string;
+  singer: string;
+  imageUrl: string;
 };
+
 
 let previews = await send("getPreviews", userId) as Preview[];
 
-function createPreview(preview: Preview): HTMLAnchorElement {
+function createPreviewA(preview: Preview): HTMLAnchorElement {
   let a = document.createElement("a");
   a.classList.add("preview");
-  a.href = "song.html?songId=" + preview.id;
+  a.href = `song.html?songId=${preview.id}`;
 
   let img = document.createElement("img");
   img.classList.add("songImage");
-  img.src = preview.imageSource;
+  img.src = preview.imageUrl;
   a.appendChild(img);
 
-  let title = document.createElement("div");
-  title.innerText = preview.title;
-  a.appendChild(title);
+  let nameDiv = document.createElement("div");
+  nameDiv.innerText = preview.name;
+  a.appendChild(nameDiv);
+
+  let singerDiv = document.createElement("div");
+  singerDiv.classList.add("singer");
+  singerDiv.innerText = preview.singer;
+  a.appendChild(singerDiv);
 
   return a;
 }
 
-async function showPreviewsForUser() {
-  for (let preview of previews) {
-    let previewA = createPreview(preview);
+async function generatePreviewsForUser() {
+  for (let i = 0; i < previews.length; i++) {
+    let previewA = createPreviewA(previews[i]);
 
-    let isFavorite = await send("getIsFavorite", [
+    let isFavorite: boolean = await send("getIsFavorite", {
       userId,
-      preview.id
-    ]) as boolean;
+      songId: previews[i].id
+    });
 
     if (isFavorite) {
       favoritesContainer.appendChild(previewA);
@@ -49,18 +56,18 @@ async function showPreviewsForUser() {
   }
 }
 
-async function showAllPreviews() {
-  for (let preview of previews) {
-    let previewA = createPreview(preview);
+async function generatePreviews() {
+  for (let i = 0; i < previews.length; i++) {
+    let previewA = createPreviewA(previews[i]);
     previewsContainer.appendChild(previewA);
   }
 }
 
-if (userId) {
-  showPreviewsForUser();
+if (userId !== undefined) {
+  generatePreviewsForUser();
 } else {
   favoritesH2.classList.add("hidden");
   favoritesContainer.classList.add("hidden");
   moreSongsH2.classList.add("hidden");
-  showAllPreviews();
+  generatePreviews();
 }
