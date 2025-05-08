@@ -1,46 +1,36 @@
-
 import { send } from "../utilities";
 
 let titleH1 = document.querySelector("#titleH1") as HTMLHeadingElement;
 let coverImg = document.querySelector("#coverImg") as HTMLImageElement;
+let audioPlayer = document.querySelector("#audioPlayer") as HTMLAudioElement;
 let favoriteButton = document.querySelector("#favoriteButton") as HTMLButtonElement;
 let unfavoriteButton = document.querySelector("#unfavoriteButton") as HTMLButtonElement;
-let descriptionDiv = document.querySelector("#descriptionDiv") as HTMLDivElement;
-let logOutButton = document.getElementById("logOutButton") as HTMLButtonElement;
 
 let userId = localStorage.getItem("userId");
-let songId = Number(new URLSearchParams(location.search).get("id"));
-
-logOutButton.onclick = function () {
-  localStorage.removeItem("userId");
-  location.href = "index.html";
-};
+let url = new URLSearchParams(location.search);
+let songId = Number(url.get("songId"));
 
 favoriteButton.onclick = async function () {
-  await send("addToFavorites", [userId, songId]);
+  await send("addToFavorites", { userId, songId });
+
   favoriteButton.disabled = true;
   unfavoriteButton.disabled = false;
 };
 
 unfavoriteButton.onclick = async function () {
-  await send("removeFromFavorites", [userId, songId]);
+  await send("removeFromFavorites", { userId, songId });
+
   favoriteButton.disabled = false;
   unfavoriteButton.disabled = true;
 };
 
-async function appendSong() {
-  let songs = await send("getSong", userId) as any[];
-
-  let song = songs.find(s => s.id === songId);
-  if (!song) {
-    titleH1.innerText = "song not found";
-    return;
-  }
+async function loadSong() {
+  let song = await send("getSong", songId);
 
   document.title = song.name;
   titleH1.innerText = song.name;
   coverImg.src = song.imageUrl;
-  descriptionDiv.innerText = `Singer: ${song.singer}`;
+  audioPlayer.src = song.audioUrl;
 
   if (!userId) {
     favoriteButton.style.display = "none";
@@ -48,9 +38,10 @@ async function appendSong() {
     return;
   }
 
-  let isFavorite = await send("getIsFavorite", [userId, songId]) as boolean;
+  let isFavorite = await send("getIsFavorite", { userId, songId });
+
   favoriteButton.disabled = isFavorite;
   unfavoriteButton.disabled = !isFavorite;
 }
 
-appendSong();
+loadSong();

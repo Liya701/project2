@@ -93,7 +93,6 @@ class Program
               singer = song.Singer,
               imageUrl = song.ImageUrl,
               audioUrl = song.AudioUrl,
-              userId = song.UserId
             };
 
             response.Send(data);
@@ -129,13 +128,13 @@ class Program
           {
             var (userId, songId) = request.GetBody<(string, int)>();
             Console.WriteLine(userId + ", " + songId);
-            var userFavorite = new Favorite(userId, songId);
+            Favorite userFavorite = new Favorite(userId, songId);
 
             database.Favorites.Add(userFavorite);
           }
           else if (request.Path == "removeFromFavorites")
           {
-            (string userId, int songId) = request.GetBody<(string, int)>();
+           var ( userId, songId) = request.GetBody<(string, int)>();
 
             Favorite favorite = database.Favorites.First(
               f => f.UserId == userId && f.SongId == songId
