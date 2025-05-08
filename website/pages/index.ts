@@ -36,10 +36,10 @@ async function showPreviewsForUser() {
   for (let preview of previews) {
     let previewA = createPreview(preview);
 
-    let isFavorite = await send("getIsFavorite", {
-      userId: userId,
-      songId: preview.id
-    }) as boolean;
+    let isFavorite = await send("getIsFavorite", [
+      userId,
+      preview.id
+    ]) as boolean;
 
     if (isFavorite) {
       favoritesContainer.appendChild(previewA);

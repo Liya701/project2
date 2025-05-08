@@ -1,4 +1,3 @@
-
 import { send } from "../utilities";
 
 let loggedInDiv = document.getElementById("loggedInDiv") as HTMLDivElement;
@@ -15,7 +14,6 @@ logOutButton.onclick = function () {
 async function getUsername() {
   if (id == null) {
     loggedInDiv.classList.add("hidden");
-    localStorage.removeItem("userId");
     return;
   }
 
@@ -23,7 +21,6 @@ async function getUsername() {
 
   if (username == null) {
     loggedInDiv.classList.add("hidden");
-    localStorage.removeItem("userId");
     return;
   }
 

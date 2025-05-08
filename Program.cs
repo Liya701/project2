@@ -66,33 +66,50 @@ class Program
 
             response.Send(userId);
           }
+          else if (request.Path == "getUsername")
+          {
+            var userId = request.GetBody<string>();
+
+            var user = database.Users.Find(userId)!;
+
+            response.Send(user.Username);
+          }
           else if (request.Path == "addSong")
           {
             var (name, singer, imageUrl, audioUrl, userId) = request.GetBody<(string, string, string, string, string)>();
 
-            database.Songs.Add(new Song(0, name, singer, imageUrl, audioUrl, userId));
+            database.Songs.Add(new Song(name, singer, imageUrl, audioUrl, userId));
             response.Send("Song added successfully");
           }
-          else if (request.Path == "getSongs")
+          else if (request.Path == "getSong")
           {
-            var userId = request.GetBody<string>();
-            var songs = database.Songs
-                .Where(song => song.UserId == userId)
-                .ToList();
+            var songId = request.GetBody<int>();
 
-            response.Send(songs);
+            var song = database.Songs.Find(songId)!;
+
+            var data = new
+            {
+              name = song.Name,
+              singer = song.Singer,
+              imageUrl = song.ImageUrl,
+              audioUrl = song.AudioUrl,
+              userId = song.UserId
+            };
+
+            response.Send(data);
           }
+      
           else if (request.Path == "getPreviews")
           {
-            var userId = request.GetBody<string>();
+            var UserId = request.GetBody<string>();
 
             var previews = database.Songs
-              .Where(song => song.UserId == userId)
+              .Where(song => song.UserId == UserId)
               .Select(song => new
               {
                 id = song.Id,
                 title = song.Name,
-                imageSource = song.ImageUrl
+                imageUrl = song.ImageUrl
               })
               .ToList();
 
@@ -100,7 +117,7 @@ class Program
           }
           else if (request.Path == "getIsFavorite")
           {
-      (string userId, int songId) = request.GetBody<(string, int)>();
+            (string userId, int songId) = request.GetBody<(string, int)>();
 
             bool isFavorite = database.Favorites.Any(
               f => f.UserId == userId && f.SongId == songId
@@ -110,12 +127,11 @@ class Program
           }
           else if (request.Path == "addToFavorites")
           {
-            (string userId, int songId) = request.GetBody<(string, int)>();
+            var (userId, songId) = request.GetBody<(string, int)>();
+            Console.WriteLine(userId + ", " + songId);
+            var userFavorite = new Favorite(userId, songId);
 
-           Favorite userFavorite = new Favorite(userId, songId);
-              database.Favorites.Add(userFavorite);
-
-            response.Send("Added to favorites");
+            database.Favorites.Add(userFavorite);
           }
           else if (request.Path == "removeFromFavorites")
           {
@@ -127,9 +143,11 @@ class Program
 
             database.Favorites.Remove(favorite);
 
-            response.Send("Removed from favorites");
           }
-          response.SetStatusCode(405);
+          else
+          {
+            response.SetStatusCode(405);
+          }
 
           database.SaveChanges();
         }
@@ -149,7 +167,7 @@ class Database() : DbBase("database")
 {
   public DbSet<User> Users { get; set; } = default!;
   public DbSet<Song> Songs { get; set; } = default!;
-    public DbSet<Favorite> Favorites { get; set; }
+  public DbSet<Favorite> Favorites { get; set; } = default!;
 
 }
 
@@ -165,9 +183,9 @@ class User(string id, string username, string password)
 
 
 
-class Song(int id, string name, string singer, string imageUrl, string audioUrl, string userId)
+class Song(string name, string singer, string imageUrl, string audioUrl, string userId)
 {
-  [Key] public int Id { get; set; } = id;
+  [Key] public int Id { get; set; } = default!;
   public string Name { get; set; } = name;
   public string Singer { get; set; } = singer;
   public string ImageUrl { get; set; } = imageUrl;
