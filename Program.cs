@@ -107,8 +107,10 @@ class Program
               .Select(song => new
               {
                 id = song.Id,
-                title = song.Name,
-                imageUrl = song.ImageUrl
+               name = song.Name,
+              singer = song.Singer,
+              imageUrl = song.ImageUrl,
+              audioUrl = song.AudioUrl,
               })
               .ToList();
 
