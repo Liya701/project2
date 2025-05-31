@@ -83,9 +83,9 @@ class Program
           }
           else if (request.Path == "getSong")
           {
-            var songId = request.GetBody<int>();
+            var userId = request.GetBody<string>();
 
-            var song = database.Songs.Find(songId)!;
+            var song = database.Songs.Find(userId)!;
 
             var data = new
             {
@@ -97,7 +97,7 @@ class Program
 
             response.Send(data);
           }
-      
+
           else if (request.Path == "getPreviews")
           {
             var UserId = request.GetBody<string>();
@@ -107,10 +107,10 @@ class Program
               .Select(song => new
               {
                 id = song.Id,
-               name = song.Name,
-              singer = song.Singer,
-              imageUrl = song.ImageUrl,
-              audioUrl = song.AudioUrl,
+                name = song.Name,
+                singer = song.Singer,
+                imageUrl = song.ImageUrl,
+                audioUrl = song.AudioUrl,
               })
               .ToList();
 
@@ -136,7 +136,7 @@ class Program
           }
           else if (request.Path == "removeFromFavorites")
           {
-           var ( userId, songId) = request.GetBody<(string, int)>();
+            var (userId, songId) = request.GetBody<(string, int)>();
 
             Favorite favorite = database.Favorites.First(
               f => f.UserId == userId && f.SongId == songId

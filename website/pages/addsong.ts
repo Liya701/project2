@@ -15,7 +15,7 @@ type Song = {
   audioUrl: string;
 };
 
-// נטען את userId מתוך localStorage (שנשמר לאחר login/signup)
+// Load userId from localStorage (saved after login/signup)
 let userId = localStorage.getItem("userId");
 
 addSongButton.onclick = async function () {
@@ -25,19 +25,23 @@ addSongButton.onclick = async function () {
   }
 
   let response = await send("addSong", [
-    songName.value,
-    singerName.value,
-    imageUrl.value,
+     songName.value,
+     singerName.value,
+     imageUrl.value,
     audioUrl.value,
-    userId
-  ]) as string;
+     userId
+  ]);
 
   if (response === "Song added successfully") {
-    message.innerText = "🎉 the song was succsesfully added";
+    message.innerText = "🎉 The song was successfully added!";
     clearInputs();
-    loadSongs(); // טען מחדש את השירים מהשרת
+    loadSongs();
+
+    setTimeout(() => {
+      window.location.href = 'index.html';
+    }, 2000);
   } else {
-    message.innerText = "😞 we couldn't add your song";
+    message.innerText = "😞 We couldn't add your song";
   }
 };
 
@@ -48,44 +52,13 @@ function clearInputs() {
   audioUrl.value = "";
 }
 
-// טוען את השירים מהשרת עבור המשתמש הנוכחי
 async function loadSongs() {
   if (!userId) return;
 
   musicPlayer.innerHTML = "";
 
   let songs = await send("getSongs", userId) as Song[];
-  if (!songs) {
-    songs = [];
+  if (!songs) songs = [];
+
+
   }
-
-
-
-addSongButton.onclick = async function () {
-  if (!userId) {
-    message.innerText = "User not logged in.";
-    return;
-  }
-
-  let response = await send("addSong", [
-    songName.value,
-    singerName.value,
-    imageUrl.value,
-    audioUrl.value,
-    userId
-  ]) as string;
-
-  if (response === "Song added successfully") {
-    message.innerText = "🎉 The song was successfully added!";
-    clearInputs();
-    loadSongs(); // Reload the songs from the server
-
-    // Redirect to index.html after song is added
-    setTimeout(() => {
-      window.location.href = 'index.html'; // Redirect after 2 seconds
-    }, 2000);
-  } else {
-    message.innerText = "😞 We couldn't add your song";
-  }
-}
-};

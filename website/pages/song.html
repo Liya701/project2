@@ -2,42 +2,47 @@
 <html>
 
 <head>
-    <style>
-        @font-face {
-  font-family: "myFont";
-  src: url("/website/fonts/Tektur-VariableFont_wdth\,wght.ttf");
-}
+  <style>
+    @font-face {
+      font-family: "myFont";
+      src: url("/website/fonts/Tektur-VariableFont_wdth,wght.ttf");
+    }
 
-* {
-  font-family: "myFont";
-}
+    * {
+      font-family: "myFont";
+    }
 
-body {
-  margin: 0;
-}
+    body {
+      background-image: url('https://www.yo-yoo.co.il/rekaim/images/uploads/cbb511.jpg');
+      background-size: cover;
+      margin: 0;
+    }
 
-button {
-  width: 160px;
-}
+    button {
+      width: 160px;
+    }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-#coverImg {
-  width: 200px;
-  height: 300px;
-  box-shadow: 0px 2px 40px -20px rgba(0, 0, 0, 0.75);
-  border-radius: 7px;
-  display: block;
-}
+    #coverImg {
+      width: 200px;
+      height: 300px;
+      box-shadow: 0px 2px 40px -20px rgba(0, 0, 0, 0.75);
+      border-radius: 7px;
+      display: block;
+    }
 
-#descriptionDiv {
-  margin: 20px;
-}
-    </style>
+    #youtubePlayer {
+      width: 0;
+      height: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+  </style>
 </head>
 
 <body>
@@ -45,15 +50,19 @@ button {
   <div class="container">
     <h1 id="titleH1"></h1>
     <img id="coverImg">
-
+    <audio id="audioPlayer" controls style="margin-top: 20px;"></audio>
+    <iframe id="youtubePlayer" allowfullscreen></iframe>
+    <div id="youtubeControls" style="margin-top: 10px; display: none;">
+      <button id="playYouTube">Play</button>
+      <button id="stopYouTube">Stop</button>
+    </div>
+    <h1 id="message"></h1>
     <br>
-
     <button id="favoriteButton">Add to Favorites</button>
     <button id="unfavoriteButton">Remove from Favorites</button>
-
-    <div id="descriptionDiv"></div>
   </div>
 
+  <script src="https://www.youtube.com/iframe_api"></script>
   <script type="module" src="song.js"></script>
 </body>
 
