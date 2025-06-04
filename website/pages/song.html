@@ -42,21 +42,31 @@
       opacity: 0;
       pointer-events: none;
     }
+    #titleH1{
+      color: white;
+    }
+ 
+    .hidden {
+      display: none !important;
+    }
   </style>
 </head>
 
 <body>
-  <iframe src="header.html"></iframe>
+
+  <a href="index.html" target="_top">
+    <div id="loggedInDiv">
+      <div id="greetingDiv"></div>
+      <button id="logOutButton">Log Out</button>
+    </a>
   <div class="container">
     <h1 id="titleH1"></h1>
     <img id="coverImg">
     <audio id="audioPlayer" controls style="margin-top: 20px;"></audio>
     <iframe id="youtubePlayer" allowfullscreen></iframe>
     <div id="youtubeControls" style="margin-top: 10px; display: none;">
-      <button id="playYouTube">Play</button>
-      <button id="stopYouTube">Stop</button>
+    <div id="message"></div>
     </div>
-    <h1 id="message"></h1>
     <br>
     <button id="favoriteButton">Add to Favorites</button>
     <button id="unfavoriteButton">Remove from Favorites</button>

@@ -13,6 +13,33 @@ let audioPlayer = document.querySelector("#audioPlayer") as HTMLAudioElement;
 let favoriteButton = document.querySelector("#favoriteButton") as HTMLButtonElement;
 let unfavoriteButton = document.querySelector("#unfavoriteButton") as HTMLButtonElement;
 let message = document.querySelector("#message") as HTMLParagraphElement | null;
+let loggedInDiv = document.getElementById("loggedInDiv") as HTMLDivElement;
+let greetingDiv = document.getElementById("greetingDiv") as HTMLDivElement;
+let logOutButton = document.getElementById("logOutButton") as HTMLButtonElement;
+let id = localStorage.getItem("userId");
+
+logOutButton.onclick = function () {
+  localStorage.removeItem("userId");
+  location.href = "index.html";
+};
+
+async function getUsername() {
+  if (id == null) {
+    loggedInDiv.classList.add("hidden");
+    return;
+  }
+
+  let username = await send("getUsername", id) as string | null;
+
+  if (username == null) {
+    loggedInDiv.classList.add("hidden");
+    return;
+  }
+
+  greetingDiv.innerText = "Welcome, " + username + "!";
+}
+
+getUsername(); 
 
 let userId = localStorage.getItem("userId");
 let url = new URLSearchParams(location.search);
@@ -32,7 +59,6 @@ unfavoriteButton.onclick = async function () {
 
 async function loadSong() {
   let songs = await send("getPreviews", userId) as Song[];
-
   let song = songs.find(s => s.id === songId);
 
   if (!song) {

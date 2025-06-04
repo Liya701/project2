@@ -2,17 +2,78 @@
 <html>
 
 <head>
-  <title>404</title>
+  <title>404 - Page Not Found</title>
+  <style>
+      @font-face {
+  font-family: "myFont";
+  src: url("/website/fonts/Tektur-VariableFont_wdth\,wght.ttf");
+}
+    body {
+      font-family: "myFont";
+      background: linear-gradient(to right, #141E30, #243B55);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .error-container {
+      max-width: 500px;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    }
+
+    h1 {
+      font-size: 5rem;
+      margin: 0;
+    }
+
+    p {
+      font-size: 1.3rem;
+      margin: 1rem 0;
+    }
+
+    .home-btn {
+      margin-top: 2rem;
+      padding: 0.8rem 1.6rem;
+      font-size: 1rem;
+      color: white;
+      background-color: #ff4b2b;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .home-btn:hover {
+      background-color: #ff6f61;
+    }
+
+    .note {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      opacity: 0.6;
+    }
+
+    .note::before {
+      content: "🎧 ";
+    }
+  </style>
 </head>
-
 <body>
-
-  <h1>404 - Not Found</h1>
-  <div>The page you were looking for doesn't exist :(</div>
-  
-  <br>
-
-  <a href="/website/pages/index.html">Go to the main page</a>
+  <div class="error-container">
+    <h1>404</h1>
+    <p>Oops! Looks like this track hasn't been recorded yet 🎶</p>
+    <p>The page you're looking for played a note that doesn't exist...</p>
+    <a href="/website/pages/index.html" class="home-btn">Back to Home</a>
+    <p class="note">Or maybe it's your chance to add a new song and create a hit 😉</p>
+  </div>
 </body>
-
 </html>

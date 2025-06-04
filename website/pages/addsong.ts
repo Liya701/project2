@@ -37,9 +37,6 @@ addSongButton.onclick = async function () {
     clearInputs();
     loadSongs();
 
-    setTimeout(() => {
-      window.location.href = 'index.html';
-    }, 2000);
   } else {
     message.innerText = "😞 We couldn't add your song";
   }
@@ -57,7 +54,7 @@ async function loadSongs() {
 
   musicPlayer.innerHTML = "";
 
-  let songs = await send("getSongs", userId) as Song[];
+  let songs = await send("getSong", userId) as Song[];
   if (!songs) songs = [];
 
 

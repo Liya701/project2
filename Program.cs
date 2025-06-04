@@ -14,7 +14,20 @@ class Program
     Console.WriteLine($"Main page: http://localhost:{port}/website/pages/signup.html");
 
     var database = new Database();
+    if (true)
+    {
+      if (!database.Songs.Any(song => song.UserId == "default"))
+      {
+        database.Songs.Add(new Song(
+          "Bohemian Rhapsody",
+          "Queen",
+          "https://did.li/Dq4TY",
+        "https://did.li/UBvx5",
+        "default"
 
+        ));
+      }
+    }
 
     while (true)
     {
@@ -85,17 +98,18 @@ class Program
           {
             var userId = request.GetBody<string>();
 
-            var song = database.Songs.Find(userId)!;
+            var songs = database.Songs
+              .Where(song => song.UserId == userId)
+              .Select(song => new
+              {
+                name = song.Name,
+                singer = song.Singer,
+                imageUrl = song.ImageUrl,
+                audioUrl = song.AudioUrl,
+              })
+              .ToList();
 
-            var data = new
-            {
-              name = song.Name,
-              singer = song.Singer,
-              imageUrl = song.ImageUrl,
-              audioUrl = song.AudioUrl,
-            };
-
-            response.Send(data);
+            response.Send(songs);
           }
 
           else if (request.Path == "getPreviews")

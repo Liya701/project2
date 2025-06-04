@@ -103,6 +103,21 @@
     .song-card button:hover {
       background-color: rgb(100, 30, 130);
     }
+    .backButton {
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: rgb(69, 13, 95); 
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 10px;
+}
+
+.backButton:hover {
+  background-color: rgb(100, 30, 130);
+}
   </style>
 </head>
 
@@ -112,8 +127,10 @@
     <input type="text" id="songName" placeholder="Song name" />
     <input type="text" id="singerName" placeholder="Singer name" />
     <input type="text" id="imageUrl" placeholder="Image URL" />
-    <input type="text" id="audioUrl" placeholder="Audio URL " />
+    <input type="text" id="audioUrl" placeholder="Audio URL (Youtube link)" />
     <button class="addSongButton">Add Song</button>
+    <button onclick="window.location.href='index.html'" class="backButton">Back to Main Page</button>
+
     <div id="message"></div>
   </div>
 
