@@ -22,7 +22,23 @@ class Program
           "Bohemian Rhapsody",
           "Queen",
           "https://did.li/Dq4TY",
-        "https://did.li/UBvx5",
+        "https://youtu.be/fJ9rUzIMcZQ?si=MfFfNN0FDRKlkB7l",
+        "default"
+
+        ));
+        database.Songs.Add(new Song(
+         "God's Plan",
+         "Drake",
+         "https://did.li/LiSrl",
+       "https://youtu.be/xpVfcZ0ZcFM?si=aV4webhE8nuWHJyh",
+       "default"
+
+       ));
+           database.Songs.Add(new Song(
+          "I Love It",
+          "Icona Pop & Charli XCX ",
+          "https://did.li/QZXaa",
+        "https://youtu.be/G83t6zH9Axk?si=vSnVEdwkFd8m1fpo",
         "default"
 
         ));
@@ -117,7 +133,7 @@ class Program
             var UserId = request.GetBody<string>();
 
             var previews = database.Songs
-              .Where(song => song.UserId == UserId)
+              .Where(song => song.UserId == UserId || song.UserId == "default")
               .Select(song => new
               {
                 id = song.Id,

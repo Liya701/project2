@@ -72,25 +72,20 @@ async function loadSong() {
   titleH1.innerText = song.name;
   coverImg.src = song.imageUrl;
 
-  // אם זה יוטיוב - תחליף את ה-audio ב-iframe
-  let youtubeMatch = song.audioUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w\-]+)/);
-  if (youtubeMatch) {
-    let videoId = youtubeMatch[1];
-    let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+  let youtubeMatch = song.audioUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w\-]{11})/);
+let videoId = youtubeMatch?.[1]; // כי את יודעת שהקישור בטוח תקני
+let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
 
-    let iframe = document.createElement("iframe");
-    iframe.width = "300";
-    iframe.height = "200";
-    iframe.src = embedUrl;
-    iframe.allow = "autoplay";
-    iframe.allowFullscreen = true;
-    iframe.style.marginTop = "20px";
-    iframe.style.border = "none";
+let iframe = document.createElement("iframe");
+iframe.width = "300";
+iframe.height = "200";
+iframe.src = embedUrl;
+iframe.allow = "autoplay";
+iframe.allowFullscreen = true;
+iframe.style.marginTop = "20px";
+iframe.style.border = "none";
 
-    audioPlayer.replaceWith(iframe);
-  } else {
-    audioPlayer.src = song.audioUrl;
-  }
+audioPlayer.replaceWith(iframe);
 
   if (!userId) {
     favoriteButton.style.display = "none";

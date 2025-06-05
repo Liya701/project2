@@ -18,30 +18,37 @@ type Song = {
 // Load userId from localStorage (saved after login/signup)
 let userId = localStorage.getItem("userId");
 
+function isValidYouTubeUrl(url: string): boolean {
+  return /^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[\w\-]{11}/.test(url);
+}
+
 addSongButton.onclick = async function () {
   if (!userId) {
     message.innerText = "User not logged in.";
     return;
   }
 
+  if (!isValidYouTubeUrl(audioUrl.value)) {
+    message.innerText = "😞 We couldn't add your song (Invalid YouTube URL)";
+    return;
+  }
+
   let response = await send("addSong", [
-     songName.value,
-     singerName.value,
-     imageUrl.value,
+    songName.value,
+    singerName.value,
+    imageUrl.value,
     audioUrl.value,
-     userId
+    userId
   ]);
 
   if (response === "Song added successfully") {
     message.innerText = "🎉 The song was successfully added!";
     clearInputs();
     loadSongs();
-
   } else {
     message.innerText = "😞 We couldn't add your song";
   }
 };
-
 function clearInputs() {
   songName.value = "";
   singerName.value = "";
