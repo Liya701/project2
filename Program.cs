@@ -34,14 +34,14 @@ class Program
        "default"
 
        ));
-           database.Songs.Add(new Song(
-          "I Love It",
-          "Icona Pop & Charli XCX ",
-          "https://did.li/QZXaa",
-        "https://youtu.be/G83t6zH9Axk?si=vSnVEdwkFd8m1fpo",
-        "default"
+        database.Songs.Add(new Song(
+       "I Love It",
+       "Icona Pop & Charli XCX ",
+       "https://did.li/QZXaa",
+     "https://youtu.be/G83t6zH9Axk?si=vSnVEdwkFd8m1fpo",
+     "default"
 
-        ));
+     ));
       }
     }
 
@@ -148,10 +148,20 @@ class Program
           }
           else if (request.Path == "getIsFavorite")
           {
-            (string userId, int songId) = request.GetBody<(string, int)>();
+            var body = request.GetBody<(string, int)>();
+
+            if (body.Item1 == null)
+            {
+              response.SetStatusCode(400);
+              response.Send("Missing user ID");
+              return;
+            }
+
+            string userId = body.Item1;
+            int songId = body.Item2;
 
             bool isFavorite = database.Favorites.Any(
-              f => f.UserId == userId && f.SongId == songId
+                f => f.UserId == userId && f.SongId == songId
             );
 
             response.Send(isFavorite);

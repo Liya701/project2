@@ -66,6 +66,25 @@ a.preview {
 .hidden {
   display: none !important;
 }
+#loginAfterLogout {
+  display: none;
+  text-align: center;
+  font-family: "myFont";
+  margin-top: 20px;
+  color: white;
+}
+
+#goToLogin {
+  margin-top: 10px;
+  padding: 10px;
+  font-size: 18px;
+  background-color: rgb(69, 13, 95);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "myFont";
+}
 </style>  
 </head>
 
@@ -73,10 +92,14 @@ a.preview {
 
   <h2 id="favoritesH2">Favorites</h2>
   <div id="favoritesContainer" class="container"></div>
-
+      
   <h2 id="moreSongsH2">More songs</h2>
   <div id="previewsContainer" class="container">
-
+    
+    <div id="loginAfterLogout">
+      <h2>You have been logged out.</h2>
+      <button id="goToLogin">Log in again</button>
+    </div>
     <a class="preview" href="addsong.html">
       <div class="addsong">
         <img class="songImage" src="/website/images/new.png">

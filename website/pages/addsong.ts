@@ -29,7 +29,7 @@ addSongButton.onclick = async function () {
   }
 
   if (!isValidYouTubeUrl(audioUrl.value)) {
-    message.innerText = "😞 We couldn't add your song (Invalid YouTube URL)";
+    message.innerText = "😞 We couldn't add your song - Invalid YouTube URL";
     return;
   }
 

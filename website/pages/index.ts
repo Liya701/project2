@@ -2,8 +2,10 @@ import { send } from "../utilities";
 
 let favoritesContainer = document.querySelector("#favoritesContainer") as HTMLDivElement;
 let previewsContainer = document.querySelector("#previewsContainer") as HTMLDivElement;
-let favoritesH2 = document.querySelector("#favoritesH2") as HTMLHeadingElement;
 let moreSongsH2 = document.querySelector("#moreSongsH2") as HTMLHeadingElement;
+let favoritesH2 = document.querySelector("#favoritesH2") as HTMLHeadingElement;
+let loginAfterLogout = document.querySelector("#loginAfterLogout") as HTMLDivElement;
+let goToLogin = document.querySelector("#goToLogin") as HTMLButtonElement;
 
 let userId = localStorage.getItem("userId");
 
@@ -14,9 +16,9 @@ type Preview = {
   imageUrl: string;
 };
 
-
 let previews = await send("getPreviews", userId) as Preview[];
 
+// 🧠 פונקציות
 function createPreviewA(preview: Preview): HTMLAnchorElement {
   let a = document.createElement("a");
   a.classList.add("preview");
@@ -63,11 +65,19 @@ async function generatePreviews() {
   }
 }
 
-if (userId !== undefined) {
+// 🎬 ההרצה בפועל
+if (userId !== null) {
   generatePreviewsForUser();
 } else {
   favoritesH2.classList.add("hidden");
   favoritesContainer.classList.add("hidden");
   moreSongsH2.classList.add("hidden");
+
   generatePreviews();
+
+  loginAfterLogout.style.display = "block";
+
+  goToLogin.onclick = () => {
+    location.href = "login.html";
+  };
 }
