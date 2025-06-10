@@ -10,57 +10,62 @@
 }
     body {
       font-family: "myFont";
-      background: linear-gradient(to right, #141E30, #243B55);
+      background: linear-gradient(to right, #141E30, #243B55); /* רקע מתחלף (גרדיאנט) משמאל לימין בצבעים כהים */
       color: white;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      flex-direction: column; /* מגדיר כיוון הפריסה לעמודה, אלמנטים יסתדרו מלמעלה למטה */
+  justify-content: center; /* ממרכז את התוכן אנכית בתוך הדף */
+  align-items: center; /* ממרכז את התוכן אופקית בתוך הדף */
       text-align: center;
-      height: 100vh;
+      height: 100vh; /* גובה הדיב הוא 100% מגובה המסך (viewport) – גמיש ומתאים לכל גודל מסך */
       margin: 0;
-      overflow: hidden;
+      overflow: hidden;  /*כדי למנוע תזוזה של התוכן מעבר לגבולות ולהסתיר מה שיוצא מחוץ.*/
     }
 
     .error-container {
-      max-width: 500px;
-      padding: 2rem;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 20px;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
-    }
+  max-width: 500px; 
+  padding: 32px; 
+  background: rgba(255, 255, 255, 0.05); 
+  border-radius: 20px; 
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1); /* צל עדין סביב המיכל */
+}
 
-    h1 {
-      font-size: 5rem;
-      margin: 0;
-    }
+p {
+  font-size: 20.8px; 
+  margin: 16px 0; /* ריווח עליון ותחתון 16 פיקסלים, שמאל וימין 0 */
+}
 
-    p {
-      font-size: 1.3rem;
-      margin: 1rem 0;
-    }
+h1 {
+  font-size: 80px;
+  margin: 0; /* מסיר רווחים חיצוניים */
+}
+
+p {
+  font-size: 20.8px; 
+  margin: 16px 0; /* ריווח עליון ותחתון 16px, שמאל וימין 0 */
+}
 
     .home-btn {
-      margin-top: 2rem;
-      padding: 0.8rem 1.6rem;
-      font-size: 1rem;
-      color: white;
-      background-color: #ff4b2b;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+  margin-top: 32px; 
+  padding: 12.8px 25.6px; /* ריווח פנימי אנכי 12.8px, אופקי 25.6px  */
+  font-size: 16px; 
+  color: white; 
+  background-color: #ff4b2b; 
+  border: none; /* מסיר את הגבול הדיפולטי של הכפתור */
+  border-radius: 50px; 
+  cursor: pointer; 
+  transition: background-color 0.3s ease; /* מעבר חלק לצבע הרקע */
+}
 
     .home-btn:hover {
       background-color: #ff6f61;
     }
 
     .note {
-      margin-top: 2rem;
-      font-size: 0.9rem;
-      opacity: 0.6;
-    }
+  margin-top: 32px; 
+  font-size: 14.4px; 
+  opacity: 0.6; /* שקיפות */
+}
 
     .note::before {
       content: "🎧 ";

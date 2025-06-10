@@ -8,6 +8,8 @@ let addSongButton = document.querySelector(".addSongButton") as HTMLButtonElemen
 let message = document.querySelector("#message") as HTMLDivElement;
 let musicPlayer = document.querySelector("#musicPlayer") as HTMLDivElement;
 
+
+// טיפוס שמגדיר איך שיר נראה - עם שם, זמר, תמונה וכתובת אודיו
 type Song = {
   name: string;
   singer: string;
@@ -15,24 +17,28 @@ type Song = {
   audioUrl: string;
 };
 
-// Load userId from localStorage (saved after login/signup)
+// מביא את מזהה המשתמש (שנשמר אחרי כניסה או הרשמה) מה-LocalStorage
 let userId = localStorage.getItem("userId");
 
+// פונקציה שבודקת אם הקישור שניתן הוא קישור תקין ליוטיוב (סינון בסיסי)
 function isValidYouTubeUrl(url: string): boolean {
   return /^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[\w\-]{11}/.test(url);
 }
 
 addSongButton.onclick = async function () {
+  // אם אין משתמש מחובר - לא ניתן להוסיף שיר, ומוצגת הודעה מתאימה
   if (!userId) {
     message.innerText = "User not logged in.";
-    return;
+    return;  
   }
 
+  // אם הקישור ליוטיוב לא תקין - יוצג למשתמש הודעה מתאימה
   if (!isValidYouTubeUrl(audioUrl.value)) {
     message.innerText = "😞 We couldn't add your song - Invalid YouTube URL";
-    return;
+    return;  
   }
 
+  // שליחת בקשה לשרת להוספת השיר עם כל המידע שנאסף מהטופס
   let response = await send("addSong", [
     songName.value,
     singerName.value,
@@ -41,14 +47,18 @@ addSongButton.onclick = async function () {
     userId
   ]);
 
+  // במידה והשרת מחזיר בהצלחה - מציגים הודעה חיובית, מנקים את השדות וטוענים מחדש את רשימת השירים
   if (response === "Song added successfully") {
     message.innerText = "🎉 The song was successfully added!";
-    clearInputs();
-    loadSongs();
+    clearInputs();  // מנקה שדות טקסט
+    loadSongs();    // טוען את השירים כדי להציג אותם מחדש
   } else {
+    // במידה והייתה תקלה - מציג הודעת שגיאה
     message.innerText = "😞 We couldn't add your song";
   }
 };
+
+// פונקציה שמנקה את שדות הטקסט בטופס כדי להקל על המשתמש להכניס שיר חדש
 function clearInputs() {
   songName.value = "";
   singerName.value = "";
@@ -56,13 +66,17 @@ function clearInputs() {
   audioUrl.value = "";
 }
 
+// פונקציה שאחראית לטעון את השירים מהשרת ולהציג אותם ב-musicPlayer
 async function loadSongs() {
-  if (!userId) return;
+  if (!userId) return;  // אם אין משתמש מחובר - לא ממשיכים
 
-  musicPlayer.innerHTML = "";
+  musicPlayer.innerHTML = "";  // מנקים את המוזיקה שהייתה קודם
 
+  // מביאים את רשימת השירים מהשרת לפי המשתמש
   let songs = await send("getSong", userId) as Song[];
-  if (!songs) songs = [];
+
+  if (!songs) songs = [];  // אם אין שירים מחזירים מערך ריק למניעת שגיאות
 
 
   }
+  

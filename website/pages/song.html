@@ -24,8 +24,8 @@
 
     .container {
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      flex-direction: column; /* מסדרים את הכל בטור */
+      align-items: center; /* מרכזים אותם אופקית */
     }
 
     #coverImg {
@@ -36,18 +36,12 @@
       display: block;
     }
 
-    #youtubePlayer {
-      width: 0;
-      height: 0;
-      opacity: 0;
-      pointer-events: none;
-    }
-    #titleH1{
+    #titleH1 {
       color: white;
     }
- 
+
     .hidden {
-      display: none !important;
+      display: none !important; /* מחלקה מיוחדת שמסתירה אלמנט לחלוטין */
     }
   </style>
 </head>
@@ -57,16 +51,15 @@
   <a href="index.html" target="_top">
     <div id="loggedInDiv">
       <div id="greetingDiv"></div>
-      <button id="logOutButton">Log Out</button>
-    </a>
+    </div>
+  </a>
+  <button id="logOutButton">Log Out</button>
+
   <div class="container">
     <h1 id="titleH1"></h1>
     <img id="coverImg">
-    <audio id="audioPlayer" controls style="margin-top: 20px;"></audio>
-    <iframe id="youtubePlayer" allowfullscreen></iframe>
-    <div id="youtubeControls" style="margin-top: 10px; display: none;">
-    <div id="message"></div>
-    </div>
+    <div id="playerContainer" style="margin-top: 20px;"></div>
+
     <br>
     <button id="favoriteButton">Add to Favorites</button>
     <button id="unfavoriteButton">Remove from Favorites</button>
